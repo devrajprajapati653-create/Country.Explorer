@@ -6,10 +6,10 @@ const Sorting = ({ setSort }) => {
   }
 
   return (
-    <div className="rounded-full p-4 border border-gray-800 w-full mb-5">
+    <div className="flex items-center justify-center rounded-3xl border border-gray-800 w-full mb-5">
       <select
         onChange={Sorting}
-        className="text-center text-xl w-1/2 border border-gray-800 rounded-full px-4 py-2"
+        className=" text-center text-xl w-1/2 px-4 py-2"
       >
         <option value="">Default Sort</option>
         <optgroup label="population">

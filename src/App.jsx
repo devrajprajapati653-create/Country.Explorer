@@ -1,78 +1,62 @@
 import { useEffect, useState } from "react";
+import { Route, Routes } from "react-router-dom";
 import CountryList from "./components/CountryList";
-import Search from "./components/Search";
 import Loader from "./components/Loader";
+import Header from "./components/Header";
+import CountryDetail from "./components/CountryDetail";
+import Like from "./components/Like"
 
 function App() {
+  const savedDataString = localStorage.getItem("my-cart") || "{}";
+  const savedData = JSON.parse(savedDataString);
+
   const [countries, setCountries] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [sort, setSort] = useState("");
+
+  const [cart, setCart] = useState(savedData);
 
   useEffect(() => {
     fetch(
-      "https://restcountries.com/v3.1/all?fields=name,flags,population,region,capital"
+      "https://raw.githubusercontent.com/restcountries/restcountries/master/src/main/resources/countriesV3.1.json",
     )
       .then((response) => response.json())
       .then((data) => {
         setCountries(data);
       })
-      .catch((error) => console.error("Error fetching countries:", error));
   }, []);
 
-  let filteredCountries = countries.filter((country) =>
-    country.name.common.toLowerCase().includes(searchTerm.toLowerCase()),
-  );
-
-  console.log("filteredCountries:", filteredCountries);
-
-  console.log("sort:", sort);
-
-  if (sort === "Americas") {
-    filteredCountries = filteredCountries.filter(
-      (country) => country.region === "Americas",
-    );
-  } else if (sort === "Africa") {
-    filteredCountries = filteredCountries.filter(
-      (country) => country.region === "Africa",
-    );
-  } else if (sort === "Asia") {
-    filteredCountries = filteredCountries.filter(
-      (country) => country.region === "Asia",
-    );
-  } else if (sort === "Antarctic") {
-    filteredCountries = filteredCountries.filter(
-      (country) => country.region === "Antarctic",
-    );
-  } else if (sort === "Europe") {
-    filteredCountries = filteredCountries.filter(
-      (country) => country.region === "Europe",
-    );
-  } else if (sort === "Oceania") {
-    filteredCountries = filteredCountries.filter(
-      (country) => country.region === "Oceania",
-    );
+  if (countries.length === 0) {
+    return <Loader />;
   }
 
-  if (sort === "low to High") {
-    filteredCountries.sort((a, b) => a.population - b.population);
-  } else if (sort === "High to Low") {
-    filteredCountries.sort((a, b) => b.population - a.population);
+ function onAddLike(code) {
+    const oldCount =  0;
+    const newCart = { ...cart, [code]: oldCount + 1 };
+    setCart(newCart);
+    const cartString = JSON.stringify(newCart);
+    localStorage.setItem("my-cart", cartString);
   }
 
-  if(countries.length === 0){
-     return <Loader />
-  }
+  const totalCount = Object.keys(cart).reduce(function (previous, current) {
+    return previous + cart[current];
+  }, 0);
 
-  
+  console.log(totalCount)
+  console.log("cart in home",cart)
+
   return (
     <>
-      <div className="flex flex-col gap-5 p-20 bg-gray-400">
-        <Search setSearchTerm={setSearchTerm} setSort={setSort} />
-
-        <div className="overflow-auto text-center font-(family-name:Arial, sans-serif, Helvetica) p-5 text-white min-w-sm max-w-6xl bg-gray-100 rounded-lg self-center">
-          <CountryList countries={filteredCountries} />
-        </div>
-      </div>
+      <Header totalCount={totalCount} />
+      <Routes>
+        <Route path="" element={<CountryList countries={countries} />}></Route>
+        <Route
+          path="/country/:code"
+          element={<CountryDetail onAddLike={onAddLike} />}
+        ></Route>
+        <Route
+          path="/like/country"
+          element={<Like cart={cart} countries={countries} />}
+        ></Route>
+      </Routes>
     </>
   );
 }

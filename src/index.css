@@ -1,2 +1,12 @@
 @import "tailwindcss";
 
+.xs\:flex-col {
+    @media (width >= 20rem /* 320px */) {
+        flex-direction: column;
+    }
+}
+
+span {
+    color:rgb(120, 118, 118);
+    margin-left: 4px;
+}

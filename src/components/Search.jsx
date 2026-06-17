@@ -8,12 +8,12 @@ function Search({setSearchTerm, setSort}) {
     
   return (
     <>
-      <div className="flex gap-5 text-center self-center w-full sticky top-16  text-gray-800 min-w-sm max-w-4xl">
+      <div className="flex gap-5 text-center self-center w-full  text-gray-800 min-w-sm max-w-4xl">
         <input
           type="text"
           onInput={Search}
           placeholder="SEARCH ?"
-          className="text-center text-xl rounded-full p-4 border border-gray-800 w-full mb-5"
+          className="text-center text-xl rounded-3xl p-4 border border-gray-800 w-full mb-5"
         />
         <Sorting setSort={setSort}/>
       </div>
