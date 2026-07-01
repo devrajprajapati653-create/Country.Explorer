@@ -31,16 +31,6 @@ function CountryDetail({ onAddLike }) {
   }
 
   return (
-    /*<div>
-      <h1>{country.name.common}</h1>
-      <img src={country.flags.png} alt="" />
-
-      <p>Capital: {country.capital?.[0]}</p>
-      <p>Region: {country.region}</p>
-      <p>Population: {country.population}</p>
-    </div>
-    */
-
     <>
       <div className="flex flex-col gap-5 p-10">
         <Link to={"/"} className="">

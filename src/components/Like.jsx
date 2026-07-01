@@ -19,7 +19,7 @@ function Like({ cart, countries }) {
           </button>
         </Link>
         <div className="overflow-auto text-center font-(family-name:Arial, sans-serif, Helvetica) p-5 text-white min-w-sm max-w-6xl bg-gray-100 rounded-lg self-center">
-          <div className="grid grid-cols-3 gap-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
             {likedCountriesData.map((country, index) => (
               <CountryCard key={index} country={country} />
             ))}

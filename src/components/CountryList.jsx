@@ -52,7 +52,7 @@ function CountryList({ countries }) {
       <div className="flex flex-col gap-5 p-10">
         <Search setSearchTerm={setSearchTerm} setSort={setSort} />
         <div className="overflow-auto text-center font-(family-name:Arial, sans-serif, Helvetica) p-5 text-white min-w-sm max-w-6xl bg-gray-100 rounded-lg self-center">
-          <div className="grid grid-cols-3 gap-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
             {filteredCountries.map((country, index) => (
               <CountryCard key={index} country={country} />
             ))}
